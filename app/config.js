@@ -2,8 +2,11 @@
 (function (){
 	angular.module('appAgenda').config(config);
 
-	function config($stateProvider,$urlRouterProvider){
+	function config($stateProvider,$urlRouterProvider, $httpProvider){
 		// console.log('Config');
+		
+		$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+
 		$urlRouterProvider.otherwise('/home');
 
 		$stateProvider

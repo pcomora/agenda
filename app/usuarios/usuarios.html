@@ -1,9 +1,15 @@
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<h4>Gestão de Usuários</h4>
+	<div class="panel-heading clerfix">
+		<h4>
+			Gestão de Usuários
+			<div class="pull-right">
+				<button class="btn btn-primary btn-sm" ng-click="usuarios.adicionar()">Adicionar</button>
+			</div>
+		</h4>
+		
 	</div>
 	<div class="panel-body">
-		<table class="table table-hover table-striped table-bordered table-condensed">
+		<table class="table table-hover table-striped table-bordered table-condensed" ng-if="usuarios.state === 0">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -15,7 +21,7 @@
 			<tbody>
 				<tr ng-repeat="value in usuarios.dataUser.data" ng-class="{'danger' : usuarios.selected == $index}">
 					<td>{{value.UserID}}</td>
-					<td>{{value.UserName}}</td>
+					<td ng-class="{'text-danger' : value.UserState === 0}">{{value.UserName}}</td>
 					<td>{{value.UserEmail}}</td>
 					<td>
 						<button class="btn btn-default btn-sm" ng-click="usuarios.editar(value,$index)">Editar</button>
@@ -26,5 +32,52 @@
 				</tr>
 			</tbody>
 		</table>
+		<form ng-if="usuarios.state !== 0" name="formulario">
+			<div class="container">
+				<div class="panel panel-info">
+					<div class="panel-heading">Formulário de Usuário</div>
+					<div class="panel-body">
+						<!-- form here-->	
+						<!-- Nome-->
+						<div class="form-group">
+							<label>
+								Nome
+							</label>
+							<input type="text" class="form-control" placeholder="Nome do Usuário" ng-model="usuarios.form.UserName" required>
+						</div>
+						<!-- Email-->
+						<div class="form-group">
+							<label>
+								Email
+							</label>
+							<input type="email" class="form-control" placeholder="Email do Usuário" ng-model="usuarios.form.UserEmail" required>
+						</div>
+						<!-- Senha -->
+						<div class="form-group">
+							<label>
+								Senha
+							</label>
+							<input type="password" class="form-control" placeholder="Senha do Usuário" ng-model="usuarios.form.UserPassword" required>
+						</div>
+						<!-- Status -->
+						<div class="form-group">
+							<label>
+								Status
+								<input type="checkbox" ng-model="usuarios.form.UserState">
+							</label>
+							
+						</div>
+					</div>
+					<div class="panel-footer clearfix">
+						<button class="btn btn-warning" ng-click="usuarios.cancelar()">Cancelar</button>
+						<div class="pull-right">
+							<button class="btn btn-success" ng-click="usuarios.salvar()" ng-disabled="formulario.$invalid">Salvar</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			
+		</form>
 	</div>
 </div>
